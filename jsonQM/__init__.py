@@ -1,2 +1,2 @@
-from Model import Model
-from ModelSerializer import ModelSerializer
+from model import Model
+from modelserializer import ModelSerializer
