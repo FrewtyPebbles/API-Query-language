@@ -1,5 +1,5 @@
 from typing import Union
-from Model import Model
+from model import Model
 
 #this is the decorator that serializes the Model
 class ModelSerializer:

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.2.1' 
+VERSION = '0.2.2' 
 DESCRIPTION = 'A simple tool to easily make your API endpoint json queries more versatile.'
 LONG_DESCRIPTION = 'This module allows you to make your API endpoints more versatile by binding response functions to different entries on your json request similar to GraphQL.'
 
