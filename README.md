@@ -1,4 +1,17 @@
-from jsonQL import *
+# jsonQM
+
+A simple tool to easily make your API endpoint json queries more versatile.
+
+`pip install jsonQM`
+
+## Quick Start
+
+The example model explains how to set up a model and query that model.
+
+*tests/ExampleModel.py*
+
+```py
+from jsonQM import *
 
 # Make the model.
 
@@ -51,3 +64,5 @@ print(my_cool_api_query_model.get({
 
 # prints:
 # {'functions': {'repeater': ['repeat', 'repeat', 'repeat', 'repeat', 'repeat']}}
+```
+
