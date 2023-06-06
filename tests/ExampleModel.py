@@ -1,4 +1,4 @@
-from src.jsonQM import *
+from jsonQM import *
 
 # Make the model.
 
