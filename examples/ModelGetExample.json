@@ -1,0 +1,9 @@
+//Model.get()
+{
+    "sectionname":{
+        "attributename":["arg1","arg2"],//list is function args
+        "subsectionname":{
+            "attributename":["arg1","arg2"]
+        }
+    }
+}
