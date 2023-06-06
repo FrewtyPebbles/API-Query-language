@@ -1,9 +1,10 @@
 # jsonQL
 
-A tool to easily make your API endpoint json queries more versatile.
+A simple tool to easily make your API endpoint json queries more versatile.
 
 ## Quick Start
 
+The example model explains how to set up a model and query that model.
 
 *examples/ExampleModel.py*
 
@@ -11,7 +12,9 @@ A tool to easily make your API endpoint json queries more versatile.
 from jsonQL import *
 
 # Make the model.
-ms = ModelSerializer()
+
+# Declare a model serializer
+ms = ModelSerializer() # Each model must have its own serializer
 class MyModel(Model):
     def __init__(self) -> None:
         # define the structure of the query model:
@@ -19,17 +22,18 @@ class MyModel(Model):
             # we have a single query scope/section called functions
             "functions":{}
         }
+        # sync/add the model attribute functions to the model
         ms.sync(self)
         
     # Define attributes of the model (argument 2) along with the scope/section they are found in (argument 1)
     @ms.add(["functions"], "repeater")  # This attribute key is "repeater" and can be found in the "functions" dict
-    def thingy(self, arg:int):
+    def repeater(self, arg:int):
         # when the attribute is queried it will run this code and return the value
         return ["repeat" for _ in range(arg)]
 
     # You can use anything as the attribute key that is a valid python dictionary key.
     @ms.add(["functions"], 7)# Keep in mind that if used with json, you are limited to what is a valid json key.
-    def thingy2(self):
+    def number_7(self):
         return "abc"
     
 
