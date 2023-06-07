@@ -25,29 +25,72 @@ class MyModel(Model):
     def number_7(self):
         return "abc"
     
+    @ms.token()# this marks this attribute as the model's token
+    @ms.add([], "token")
+    def token(self, tok:str):
+        #insert some logic to compare token to tokens in database
+        return tok == "token" # The token function must return true for the token to be valid.
+    
 
+    @ms.requires_token()# this marks this attribute as requiring the token attribute to return true
+    @ms.add([], "secret")
+    def secret(self):
+        return "My super secret message" # if the token is false this will return 'errot:token:invalid' if the token is missing from the query this will return 'error:token:missing'
 
-my_cool_api_query_model = MyModel()
+#LOGIC
+if __name__ == "__main__":
+    # If you are experiencing bugs related to concurrency, you should reinstantiate your model per thread/concurrent task where it is being used.
+    # note that instantiation may require many itterations depending on the ammount of attributes you've added and the length of their parent path.
+    # (parent path is the first list argument in `ms.add(["some","dictionary","key","path"], "attribute name")`)
+    model_instance = MyModel()
 
-#Example query1
-print(my_cool_api_query_model.get({
-    "functions":{
-        # programmed attribute values should be a list containing the function arguments.
-        "repeater":[5],
-        7:[]
-    }
-}))
+    # If you can avoid instantiating the model more than once for optimal performance.
 
-# prints:
-# {'functions': {'repeater': ['repeat', 'repeat', 'repeat', 'repeat', 'repeat'], 7: 'abc'}}
+    #Example query 1
+    print(model_instance.get({
+        "functions":{
+            # programmed attribute values should be a list containing the function arguments.
+            "repeater":[5],
+            7:[]
+        }
+    }))
 
-#Example query2
-print(my_cool_api_query_model.get({
-    "functions":{
-        # The model will only run/return attributes which have been specified
-        "repeater":[5]
-    }
-}))
+    # prints:
+    # {'functions': {'repeater': ['repeat', 'repeat', 'repeat', 'repeat', 'repeat'], 7: 'abc'}}
 
-# prints:
-# {'functions': {'repeater': ['repeat', 'repeat', 'repeat', 'repeat', 'repeat']}}
+    #Example query 2
+    print(model_instance.get({
+        "functions":{
+            # The model will only run/return attributes which have been specified
+            "repeater":[5]
+        }
+    }))
+
+    # prints:
+    # {'functions': {'repeater': ['repeat', 'repeat', 'repeat', 'repeat', 'repeat']}}
+
+    #Example query 3
+    print(model_instance.get({
+        "token":["token"],
+        "secret":[]
+    }))
+
+    # prints:
+    # {'token': True, 'secret': 'My super secret message'}
+
+    #Example query 3
+    print(model_instance.get({
+        "token":["abc"],
+        "secret":[]
+    }))
+
+    # prints:
+    # {'token': False, 'secret': 'error:token:invalid'}
+
+    #Example query 3
+    print(model_instance.get({
+        "secret":[]
+    }))
+
+    # prints:
+    # {'secret': 'error:token:missing'}
