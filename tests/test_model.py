@@ -9,7 +9,8 @@ class MyModel(Model):
         # define the structure of the query model:
         self.model = {
             # we have a single query scope/section called functions
-            "functions": {}
+            "functions": {},
+            "msg":"test"
         }
         # sync/add the model attribute functions to the model
         ms.sync(self)
@@ -40,10 +41,9 @@ class MyModel(Model):
     def secret(self):
         return "super secret message"
 
-
+model = MyModel()
 class TestModel(unittest.TestCase):
     def test_token_success(self):
-        model = MyModel()
         self.assertEqual(model.get({
             "token": ["token"],
             "functions": {
@@ -52,6 +52,7 @@ class TestModel(unittest.TestCase):
                 "secret": []
             },
             "secret": [],
+            'msg':1
         }), 
         {
             'functions': {
@@ -66,11 +67,11 @@ class TestModel(unittest.TestCase):
                 'secret': 'super secret function message'
             }, 
             'secret': 'super secret message', 
-            'token': True
+            'token': True,
+            "msg":"test"
         })
 
     def test_token_invalid(self):
-        model = MyModel()
         self.assertEqual(model.get({
             "token": ["aaa"],
             "functions": {
@@ -79,6 +80,7 @@ class TestModel(unittest.TestCase):
                 "secret": []
             },
             "secret": [],
+            'msg':1
         }), 
         {
             'functions': {
@@ -93,11 +95,11 @@ class TestModel(unittest.TestCase):
                 'secret': 'error:token:invalid'
             }, 
             'secret': 'error:token:invalid', 
-            'token': False
+            'token': False,
+            "msg":"test"
         })
 
     def test_token_missing(self):
-        model = MyModel()
         self.assertEqual(model.get({
             "functions": {
                 "repeater": [5],
@@ -105,6 +107,7 @@ class TestModel(unittest.TestCase):
                 "secret": []
             },
             "secret": [],
+            'msg':1
         }), 
         {
             'functions': {
@@ -118,8 +121,12 @@ class TestModel(unittest.TestCase):
                 7: 'zzz', 
                 'secret': 'error:token:missing'
             }, 
-            'secret': 'error:token:missing', 
+            'secret': 'error:token:missing',
+            "msg":"test"
         })
+    
+    def test_default_attribute(self):
+        self.assertEqual(model.get({'msg':1}), {'msg': 'test'})
 
 
 if __name__ == '__main__':

@@ -22,7 +22,8 @@ class MyModel(Model):
         # define the structure of the query model:
         self.model = {
             # we have a single query scope/section called functions
-            "functions":{}
+            "functions":{},
+            "msg":"test" # non functional attributes also need to be included in the json query if you wish for them to be present in the response (see Example query 3 below)
         }
         # sync/add the model attribute functions to the model
         ms.sync(self)
@@ -107,5 +108,12 @@ if __name__ == "__main__":
 
     # prints:
     # {'secret': 'error:token:missing'}
-```
 
+    #Example query 3
+    print(model_instance.get({
+        "msg":1
+    }))
+
+    # prints:
+    # {'msg': 'test'}
+```

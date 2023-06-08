@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.3.3' 
+VERSION = '0.3.4' 
 DESCRIPTION = 'A simple tool to easily make your API endpoint json queries more versatile.'
 file = open("README.md", 'r')
 LONG_DESCRIPTION = file.read()

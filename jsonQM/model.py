@@ -1,9 +1,12 @@
 
+from typing import Callable
+
+
 class Model:
     def __init__(self) -> None:
         self.model = {}
 
-    def _get(self, query:dict, model = {}, token_result:bool = None):
+    def _get(self, query:dict, model:dict = {}, token_result:bool = None):
         compiled_query = {}
         for key, value in query.items():
             if type(value) == dict:
@@ -23,6 +26,9 @@ class Model:
                     compiled_query[key] = token_result
                 else:
                     compiled_query[key] = model[key](*value)
+            elif key in model.keys():
+                if type(model[key]) != Callable:
+                    compiled_query[key] = model[key]
             else:
                 compiled_query[key] = value
 
