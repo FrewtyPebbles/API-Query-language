@@ -1,6 +1,6 @@
 # jsonQM
 
-A simple tool to easily make your API endpoint json queries more versatile.
+A simple tool that can make your API endpoint json queries more functional.
 
 `pip install jsonQM`
 
